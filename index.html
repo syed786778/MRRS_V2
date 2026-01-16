@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mighty Retirement Readiness Score</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 { font-size: 28px; margin-bottom: 10px; font-weight: 700; }
+        .header p { font-size: 15px; opacity: 0.95; }
+        
+        .progress-container {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            display: none;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .progress-text { font-size: 14px; color: #495057; font-weight: 600; }
+        .progress-count {
+            font-size: 13px;
+            color: #6c757d;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.4s ease;
+        }
+        
+        .content { padding: 40px 30px; }
+        
+        .screen { display: none; }
+        .screen.active { display: block; }
+        
+        .dimension-tag {
+            display: inline-block;
+            font-size: 11px;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+        
+        .question-number {
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .question-text {
+            font-size: 20px;
+            color: #212529;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+        
+        .btn {
+            padding: 16px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            background: white;
+            color: #212529;
+            transition: all 0.3s;
+            text-align: left;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .btn:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateX(4px);
+        }
+        
+        .btn:active {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            text-align: center;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .intro-screen { text-align: center; }
+        .intro-icon { font-size: 64px; margin-bottom: 20px; }
+        .intro-screen h2 { font-size: 24px; color: #212529; margin-bottom: 16px; font-weight: 700; }
+        .intro-screen p { font-size: 15px; color: #6c757d; line-height: 1.7; margin-bottom: 12px; }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        
+        .warning-box strong {
+            color: #92400e;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .warning-box p {
+            color: #78350f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #495057;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .result-screen { padding: 0 !important; }
+        
+        .results-hero {
+            color: white;
+            padding: 35px 30px 25px;
+            text-align: center;
+        }
+        
+        .hero-critical { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
+        .hero-struggling { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .hero-leaking { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        .hero-optimised { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 20px;
+        }
+        
+        .score-number { font-size: 56px; font-weight: 700; color: white; line-height: 1; }
+        .score-outof { font-size: 14px; color: white; opacity: 0.9; margin-top: 4px; }
+        
+        .risk-band {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .risk-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .results-body { padding: 30px; }
+        
+        .diagnostic-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .dimension-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .dimension-item {
+            background: #f8f9fa;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #e9ecef;
+        }
+        
+        .dimension-item.critical { border-left-color: #dc2626; }
+        .dimension-item.struggling { border-left-color: #f59e0b; }
+        .dimension-item.leaking { border-left-color: #3b82f6; }
+        .dimension-item.optimised { border-left-color: #10b981; }
+        
+        .dim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .dim-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #212529;
+        }
+        
+        .dim-score {
+            font-size: 13px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: white;
+        }
+        
+        .dim-score.critical { color: #dc2626; }
+        .dim-score.struggling { color: #f59e0b; }
+        .dim-score.leaking { color: #3b82f6; }
+        .dim-score.optimised { color: #10b981; }
+        
+        .dim-bar {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .dim-fill {
+            height: 100%;
+            transition: width 0.6s ease;
+        }
+        
+        .dim-fill.critical { background: #dc2626; }
+        .dim-fill.struggling { background: #f59e0b; }
+        .dim-fill.leaking { background: #3b82f6; }
+        .dim-fill.optimised { background: #10b981; }
+        
+        .risk-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .risk-card {
+            background: #fff5f5;
+            border: 2px solid #fee;
+            border-left: 4px solid #dc2626;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .risk-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .risk-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+        
+        .risk-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 700;
+            color: #991b1b;
+            line-height: 1.4;
+        }
+        
+        .risk-description {
+            font-size: 14px;
+            color: #7f1d1d;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .risk-impact {
+            background: white;
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            border: 1px solid #fecaca;
+        }
+        
+        .impact-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #991b1b;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        
+        .impact-text {
+            font-size: 13px;
+            color: #7f1d1d;
+            font-weight: 600;
+        }
+        
+        .action-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .action-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 6px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .action-text {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+        
+        .conversion-box {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 28px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .conversion-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .conversion-box p {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .conversion-box strong {
+            color: #fbbf24;
+        }
+        
+        .cta-button {
+            background: #fbbf24;
+            color: #1e293b;
+            padding: 16px 32px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .cta-button:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+        }
+        
+        @media (max-width: 767px) {
+            .question-text { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mighty Retirement Readiness Score™</h1>
+            <p>Expert Financial Risk Diagnostic</p>
+        </div>
+        
+        <div class="progress-container" id="progress">
+            <div class="progress-info">
+                <div class="progress-text" id="pText">Question 1 of 12</div>
+                <div class="progress-count" id="pCount">1/12</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="pFill"></div>
+            </div>
+        </div>
+        
+        <div class="content" id="app"></div>
+    </div>
+    
+    <script>
+        var app = document.getElementById('app');
+        var progressBar = document.getElementById('progress');
+        var answers = [];
+        var userData = {};
+        
+        var questions = [
+            {
+                dimension: '⏰ Time Advantage',
+                text: 'What is your current age?',
+                type: 'options',
+                options: [
+                    { text: 'Below 35 years', value: 100 },
+                    { text: '35-40 years', value: 80 },
+                    { text: '41-45 years', value: 60 },
+                    { text: '46-50 years', value: 40 },
+                    { text: '51-55 years', value: 20 },
+                    { text: 'Above 55 years', value: 10 }
+                ],
+                weight: 0.15
+            },
+            {
+                dimension: '⏰ Time Advantage',
+                text: 'At what age do you plan to retire?',
+                type: 'options',
+                options: [
+                    { text: '65 or later', value: 100 },
+                    { text: '60-64', value: 70 },
+                    { text: '55-59', value: 40 },
+                    { text: 'Below 55', value: 20 },
+                    { text: 'Already retired', value: 10 }
+                ],
+                weight: 0.15
+            },
+            {
+                dimension: '💰 Savings Power',
+                text: 'What percentage of your monthly income do you invest for long-term goals (retirement, children\'s future)?',
+                type: 'options',
+                options: [
+                    { text: '30% or more', value: 100 },
+                    { text: '20-29%', value: 70 },
+                    { text: '10-19%', value: 40 },
+                    { text: '5-9%', value: 20 },
+                    { text: 'Less than 5%', value: 10 }
+                ],
+                weight: 0.25
+            },
+            {
+                dimension: '💰 Savings Power',
+                text: 'If you lost your job today, how many months can your current savings (emergency fund) cover your family expenses?',
+                type: 'options',
+                options: [
+                    { text: '12 months or more', value: 100 },
+                    { text: '6-11 months', value: 70 },
+                    { text: '3-5 months', value: 40 },
+                    { text: '1-2 months', value: 20 },
+                    { text: 'Less than 1 month', value: 10 }
+                ],
+                weight: 0.25
+            },
+            {
+                dimension: '📈 Inflation Protection',
+                text: 'What percentage of your retirement savings is invested in equity-linked assets (equity mutual funds, stocks, ELSS)?',
+                type: 'options',
+                options: [
+                    { text: '50% or more', value: 100 },
+                    { text: '30-49%', value: 70 },
+                    { text: '15-29%', value: 40 },
+                    { text: '5-14%', value: 20 },
+                    { text: 'Less than 5% or zero', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '📈 Inflation Protection',
+                text: 'Do you believe fixed deposits and EPF alone are enough to beat inflation and build a retirement corpus?',
+                type: 'options',
+                options: [
+                    { text: 'No, I need equity exposure to beat inflation', value: 100 },
+                    { text: 'Not sure, but I am open to learning', value: 50 },
+                    { text: 'Yes, FDs and EPF are safe and sufficient', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '🏥 Risk & Healthcare',
+                text: 'Do you have health insurance that will cover you after age 60?',
+                type: 'options',
+                options: [
+                    { text: 'Yes, ₹75 lakhs or higher coverage', value: 100 },
+                    { text: 'Yes, ₹50-74 lakhs coverage', value: 70 },
+                    { text: 'Yes, ₹25-49 lakhs coverage', value: 40 },
+                    { text: 'Yes, below ₹25 lakhs coverage', value: 20 },
+                    { text: 'No health insurance', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '🏥 Risk & Healthcare',
+                text: 'If a medical emergency requires ₹10 lakhs today, how would you fund it?',
+                type: 'options',
+                options: [
+                    { text: 'My health insurance would cover it', value: 100 },
+                    { text: 'I have an emergency fund specifically for this', value: 80 },
+                    { text: 'I would break my FDs or investments', value: 40 },
+                    { text: 'I would borrow from family or take a loan', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '📋 Planning Discipline',
+                text: 'Do you know how much monthly income you will need during retirement?',
+                type: 'options',
+                options: [
+                    { text: 'Yes, I have calculated it precisely', value: 100 },
+                    { text: 'I have a rough estimate', value: 50 },
+                    { text: 'No, I have not calculated this yet', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '📋 Planning Discipline',
+                text: 'Do you know the exact retirement corpus (total amount) you need to accumulate?',
+                type: 'options',
+                options: [
+                    { text: 'Yes, I have calculated it with inflation', value: 100 },
+                    { text: 'I have a rough target number', value: 50 },
+                    { text: 'No, I do not know the exact amount', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '📋 Planning Discipline',
+                text: 'When did you last review your retirement plan and investments?',
+                type: 'options',
+                options: [
+                    { text: 'Within the last 6 months', value: 100 },
+                    { text: '6-12 months ago', value: 70 },
+                    { text: '1-2 years ago', value: 40 },
+                    { text: 'More than 2 years ago', value: 20 },
+                    { text: 'I have never reviewed it', value: 10 }
+                ],
+                weight: 0.20
+            },
+            {
+                dimension: '📋 Planning Discipline',
+                text: 'Do you have a written or tracked retirement plan?',
+                type: 'options',
+                options: [
+                    { text: 'Yes, with clear goals and tracking', value: 100 },
+                    { text: 'I have a mental plan but not written', value: 40 },
+                    { text: 'No formal plan yet', value: 10 }
+                ],
+                weight: 0.20
+            }
+        ];
+        
+        function showIntro() {
+            window.scrollTo(0, 0);
+            app.innerHTML = '<div class="screen active intro-screen">' +
+                '<div class="intro-icon">🎯</div>' +
+                '<h2>Discover Your Retirement Risk Profile</h2>' +
+                '<p>This is not a quiz. This is a financial risk diagnostic that reveals exactly where your retirement plan is vulnerable.</p>' +
+                '<div class="warning-box">' +
+                '<strong>⚠️ Reality Check</strong>' +
+                '<p>73% of Indians have no idea if they are saving enough to retire. Most discover this too late. This 12-question assessment shows you the truth—right now.</p>' +
+                '</div>' +
+                '<p style="margin-top: 20px; color: #212529; font-weight: 600;">Find out your Mighty Retirement Readiness Score in 3 minutes</p>' +
+                '<button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="startAssessment()">Start My Risk Assessment →</button>' +
+                '</div>';
+        }
+        
+        function startAssessment() {
+            progressBar.style.display = 'block';
+            showQuestion(0);
+        }
+        
+        function showQuestion(idx) {
+            var qNum = idx + 1;
+            var q = questions[idx];
+            
+            document.getElementById('pText').textContent = 'Question ' + qNum + ' of 12';
+            document.getElementById('pCount').textContent = qNum + '/12';
+            document.getElementById('pFill').style.width = ((qNum/12)*100) + '%';
+            
+            var optionsHTML = '';
+            for (var i = 0; i < q.options.length; i++) {
+                optionsHTML += '<button class="btn" onclick="answerQuestion(' + idx + ', ' + q.options[i].value + ')">' + q.options[i].text + '</button>';
+            }
+            
+            app.innerHTML = '<div class="screen active">' +
+                '<div class="dimension-tag">' + q.dimension + '</div>' +
+                '<div class="question-number">Question ' + qNum + ' of 12</div>' +
+                '<div class="question-text">' + q.text + '</div>' +
+                '<div class="button-group">' + optionsHTML + '</div>' +
+                '</div>';
+        }
+        
+        function answerQuestion(idx, val) {
+            answers[idx] = val;
+            if (idx < 11) {
+                showQuestion(idx + 1);
+            } else {
+                showForm();
+            }
+        }
+        
+        function showForm() {
+            progressBar.style.display = 'none';
+            app.innerHTML = '<div class="screen active">' +
+                '<div class="intro-icon">📊</div>' +
+                '<div class="question-text" style="text-align: center;">Your Risk Analysis is Ready</div>' +
+                '<p style="text-align: center; color: #6c757d; margin-bottom: 30px;">Enter your details to access your personalized Retirement Readiness Report</p>' +
+                '<form onsubmit="submitForm(event)">' +
+                '<div class="form-group">' +
+                '<label>Full Name *</label>' +
+                '<input type="text" id="name" required>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label>Phone Number *</label>' +
+                '<input type="tel" id="phone" pattern="[0-9]{10}" required>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label>Email *</label>' +
+                '<input type="email" id="email" required>' +
+                '</div>' +
+                '<button type="submit" class="btn btn-primary" style="width: 100%;">View My Retirement Risk Report →</button>' +
+                '</form>' +
+                '</div>';
+        }
+        
+        function submitForm(e) {
+            e.preventDefault();
+            userData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value
+            };
+            calculateAndShowResults();
+        }
+        
+        function calculateAndShowResults() {
+            window.scrollTo(0, 0);
+            
+            var dimensions = {
+                timeAdvantage: { name: 'Time Advantage', score: 0, weight: 0.15, icon: '⏰' },
+                savingsPower: { name: 'Savings Power', score: 0, weight: 0.25, icon: '💰' },
+                inflationProtection: { name: 'Inflation Protection', score: 0, weight: 0.20, icon: '📈' },
+                riskHealthcare: { name: 'Risk & Healthcare', score: 0, weight: 0.20, icon: '🏥' },
+                planningDiscipline: { name: 'Planning Discipline', score: 0, weight: 0.20, icon: '📋' }
+            };
+            
+            dimensions.timeAdvantage.score = (answers[0] * questions[0].weight + answers[1] * questions[1].weight) / (questions[0].weight + questions[1].weight);
+            dimensions.savingsPower.score = (answers[2] * questions[2].weight + answers[3] * questions[3].weight) / (questions[2].weight + questions[3].weight);
+            dimensions.inflationProtection.score = (answers[4] * questions[4].weight + answers[5] * questions[5].weight) / (questions[4].weight + questions[5].weight);
+            dimensions.riskHealthcare.score = (answers[6] * questions[6].weight + answers[7] * questions[7].weight) / (questions[6].weight + questions[7].weight);
+            dimensions.planningDiscipline.score = (answers[8] * questions[8].weight + answers[9] * questions[9].weight + answers[10] * questions[10].weight + answers[11] * questions[11].weight) / (questions[8].weight + questions[9].weight + questions[10].weight + questions[11].weight);
+            
+            var totalScore = Math.round(
+                dimensions.timeAdvantage.score * dimensions.timeAdvantage.weight +
+                dimensions.savingsPower.score * dimensions.savingsPower.weight +
+                dimensions.inflationProtection.score * dimensions.inflationProtection.weight +
+                dimensions.riskHealthcare.score * dimensions.riskHealthcare.weight +
+                dimensions.planningDiscipline.score * dimensions.planningDiscipline.weight
+            );
+            
+            var riskBand, heroClass, conversionMessage;
+            if (totalScore >= 75) {
+                riskBand = { title: 'Optimised', subtitle: 'Strong retirement foundation' };
+                heroClass = 'hero-optimised';
+                conversionMessage = 'Your score of ' + totalScore + ' shows solid planning, but there is still room to maximize returns and extend your corpus longevity. A 20-minute expert review can show you how to optimize further.';
+            } else if (totalScore >= 55) {
+                riskBand = { title: 'Leaking', subtitle: 'Good start, but key gaps exist' };
+                heroClass = 'hero-leaking';
+                conversionMessage = 'Your score of ' + totalScore + ' reveals critical leaks in your retirement plan. Without fixing these gaps, you risk running out of money after age 65. A 20-minute review can plug these leaks permanently.';
+            } else if (totalScore >= 35) {
+                riskBand = { title: 'Struggling', subtitle: 'Significant retirement risk detected' };
+                heroClass = 'hero-struggling';
+                conversionMessage = 'Your score of ' + totalScore + ' indicates high risk of outliving your savings. The gaps in your plan compound over time. A 20-minute expert consultation can show you exactly how to course-correct before it is too late.';
+            } else {
+                riskBand = { title: 'Critical', subtitle: 'Immediate action required' };
+                heroClass = 'hero-critical';
+                conversionMessage = 'Your score of ' + totalScore + ' reveals critical retirement planning gaps that will lead to severe financial stress after age 60. You need immediate expert guidance. A 20-minute review will give you a clear roadmap to secure your retirement.';
+            }
+            
+            var risks = generateRisks(dimensions, answers, totalScore);
+            
+            var dimensionsHTML = '';
+            var dimKeys = Object.keys(dimensions);
+            for (var d = 0; d < dimKeys.length; d++) {
+                var dim = dimensions[dimKeys[d]];
+                var dimScore = Math.round(dim.score);
+                var dimClass = dimScore >= 75 ? 'optimised' : dimScore >= 55 ? 'leaking' : dimScore >= 35 ? 'struggling' : 'critical';
+                
+                dimensionsHTML += '<div class="dimension-item ' + dimClass + '">' +
+                    '<div class="dim-header">' +
+                    '<div class="dim-name">' + dim.icon + ' ' + dim.name + '</div>' +
+                    '<div class="dim-score ' + dimClass + '">' + dimScore + '/100</div>' +
+                    '</div>' +
+                    '<div class="dim-bar">' +
+                    '<div class="dim-fill ' + dimClass + '" style="width: ' + dimScore + '%"></div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            var risksHTML = '';
+            for (var r = 0; r < risks.length; r++) {
+                var risk = risks[r];
+                risksHTML += '<div class="risk-card">' +
+                    '<div class="risk-header">' +
+                    '<div class="risk-icon">' + risk.icon + '</div>' +
+                    '<div class="risk-title">' + risk.title + '</div>' +
+                    '</div>' +
+                    '<div class="risk-description">' + risk.description + '</div>' +
+                    '<div class="risk-impact">' +
+                    '<div class="impact-label">Financial Impact</div>' +
+                    '<div class="impact-text">' + risk.impact + '</div>' +
+                    '</div>' +
+                    '<div class="action-box">' +
+                    '<div class="action-label">Recommended Action</div>' +
+                    '<div class="action-text">' + risk.action + '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            
+            app.innerHTML = '<div class="screen active result-screen">' +
+                '<div class="results-hero ' + heroClass + '">' +
+                '<div class="score-circle">' +
+                '<div class="score-number">' + totalScore + '</div>' +
+                '<div class="score-outof">out of 100</div>' +
+                '</div>' +
+                '<div class="risk-band">' + riskBand.title + '</div>' +
+                '<div class="risk-subtitle">' + riskBand.subtitle + '</div>' +
+                '</div>' +
+                '<div class="results-body">' +
+                '<div class="diagnostic-section">' +
+                '<div class="section-header">📊 YOUR 5 RETIREMENT RISK DIMENSIONS</div>' +
+                '<div class="dimension-grid">' + dimensionsHTML + '</div>' +
+                '</div>' +
+                '<div class="diagnostic-section">' +
+                '<div class="section-header">⚠️ TOP 3 FINANCIAL RISKS HOLDING YOU BACK</div>' +
+                '<div class="risk-cards">' + risksHTML + '</div>' +
+                '</div>' +
+                '<div class="conversion-box">' +
+                '<h3>Want to Fix These Gaps?</h3>' +
+                '<p>' + conversionMessage + '</p>' +
+                '<p><strong>' + userData.name + '</strong>, our retirement planning expert will call you at <strong>' + userData.phone + '</strong> with a personalized roadmap tailored to your exact situation.</p>' +
+                '<button class="cta-button" onclick="confirmCallback()">📞 Schedule My Free 20-Min Review</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+        
+        function generateRisks(dimensions, answers, totalScore) {
+            var risks = [];
+            
+            if (dimensions.inflationProtection.score < 60) {
+                var equityPercent = answers[4];
+                var equityText = 'most of your retirement money is in fixed deposits, PPF, or EPF';
+                if (equityPercent >= 70) {
+                    equityText = 'your equity allocation could be higher';
+                }
+                
+                risks.push({
+                    icon: '📉',
+                    title: 'Inflation is Silently Eroding Your Retirement Corpus',
+                    description: 'Based on your answers, ' + equityText + '. While these feel safe, they grow at only 6-8% per year. But inflation runs at 6-7%, and healthcare inflation is 12-15% annually. This means your purchasing power is barely growing or actually shrinking.',
+                    impact: 'At 6% inflation, ₹1 crore today will have the buying power of just ₹55 lakhs in 10 years and ₹31 lakhs in 20 years. Your safe money is losing value every single year.',
+                    action: 'Shift 40-50% of your retirement corpus into equity mutual funds (diversified, index, or flexi-cap). Historical data shows equity delivers 12-15% over 15+ years, beating inflation by a wide margin.'
+                });
+            }
+            
+            if (dimensions.riskHealthcare.score < 60) {
+                var healthCover = answers[6];
+                var coverText = 'you do not have health insurance';
+                if (healthCover >= 40 && healthCover < 70) {
+                    coverText = 'your health insurance coverage is inadequate';
+                }
+                if (healthCover >= 20 && healthCover < 40) {
+                    coverText = 'your health insurance coverage is dangerously low';
+                }
+                
+                risks.push({
+                    icon: '🏥',
+                    title: 'One Medical Emergency Can Wipe Out Your Retirement Savings',
+                    description: 'Based on your answers, ' + coverText + '. Post-60 healthcare costs rise 12-15% annually. A cardiac surgery costs ₹8-15 lakhs today. Cancer treatment can run ₹20-40 lakhs. Without proper coverage, you will be forced to break your retirement investments at the worst possible time during a market downturn or medical crisis.',
+                    impact: 'A single ₹10 lakh medical emergency can set your retirement back by 5-7 years. If your corpus is ₹50 lakhs and you withdraw ₹10 lakhs, you lose not just the money but also 15-20 years of compounding growth on it.',
+                    action: 'Get a ₹75 lakh to ₹1 crore health insurance policy that covers you lifelong (or at least till age 80). Start now—premiums double every 5 years of delay, and pre-existing conditions can block coverage later.'
+                });
+            }
+            
+            if (dimensions.savingsPower.score < 60) {
+                var savingsRate = answers[2];
+                var emergencyMonths = answers[3];
+                var savingsText = 'you are investing less than 20% of your income for long-term goals';
+                if (savingsRate < 40) {
+                    savingsText = 'you are investing less than 10% of your income for long-term goals';
+                }
+                if (emergencyMonths < 70) {
+                    savingsText += ' and your emergency fund can only cover 6 months or less';
+                }
+                
+                risks.push({
+                    icon: '💸',
+                    title: 'You Are Not Saving Enough to Retire Comfortably',
+                    description: 'Based on your answers, ' + savingsText + '. To build a retirement corpus of ₹2-5 crore (adjusted for inflation), you need to invest at least 25-30% of your income consistently. Lower savings rates mean you will either have to work longer or accept a significantly lower standard of living in retirement.',
+                    impact: 'Investing 10% less per month can reduce your final corpus by 40-50% over 20 years due to lost compounding. For example, ₹10,000/month at 12% for 20 years = ₹1 crore. But ₹20,000/month = ₹2 crore—double the corpus.',
+                    action: 'Increase your monthly SIP by ₹5,000-10,000 immediately. Automate this from your salary account. Review and eliminate non-essential expenses. Build an emergency fund covering 12 months of expenses in a liquid fund or high-interest savings account.'
+                });
+            }
+            
+            if (dimensions.planningDiscipline.score < 60 && risks.length < 3) {
+                risks.push({
+                    icon: '📋',
+                    title: 'Flying Blind Without a Retirement Plan',
+                    description: 'Based on your answers, you do not have a clear, written retirement plan with specific numbers. You do not know exactly how much you need, how much to save monthly, or if you are on track. This is like driving to a destination without knowing the address or how much fuel you need.',
+                    impact: 'Without a plan, most people discover gaps 5-10 years before retirement when it is too late to fix. You will be forced to either delay retirement, drastically cut your lifestyle, or depend on children financially.',
+                    action: 'Calculate your exact retirement corpus need: Take your desired monthly retirement income, multiply by 300 (assuming 4% withdrawal rate), and adjust for inflation. Work backwards to determine monthly SIP needed. Review this plan every 6 months.'
+                });
+            }
+            
+            if (dimensions.timeAdvantage.score < 50 && risks.length < 3) {
+                var age = answers[0];
+                var ageText = 'you are over 45 years old';
+                if (age < 60) {
+                    ageText = 'you are over 50 years old';
+                }
+                
+                risks.push({
+                    icon: '⏰',
+                    title: 'Running Out of Time to Fix Your Retirement Plan',
+                    description: 'Based on your answers, ' + ageText + ', which means you have less than 10-15 years to build your retirement corpus. Every year of delay now costs you exponentially more. At this stage, mistakes are expensive and time is your scarcest resource.',
+                    impact: 'Starting retirement planning at 45 vs 35 means you need to save 2.5x more per month to reach the same corpus. Starting at 50 means 4x more. Compounding needs time you cannot make up for lost years by just saving more.',
+                    action: 'Act immediately. Maximize your equity allocation (60-70% if you have 10+ years to retirement). Increase SIP contributions aggressively. Consider delaying retirement by 2-3 years if needed. Every month you delay costs you lakhs in lost compounding.'
+                });
+            }
+            
+            if (risks.length < 3) {
+                risks.push({
+                    icon: '🏠',
+                    title: 'Too Much Wealth Locked in Illiquid Assets',
+                    description: 'Most Indian retirement portfolios are heavily concentrated in real estate and fixed deposits. While property feels like real wealth, you cannot pay monthly expenses with a flat. If 60-70% of your net worth is in one property, you are illiquid and vulnerable.',
+                    impact: 'When you need cash in retirement, selling property is slow (6-12 months), expensive (2-3% brokerage), and forced selling often means accepting 10-20% below market value. Plus, you lose rental income potential.',
+                    action: 'Rebalance your portfolio: Target 40-50% equity mutual funds, 30-40% debt (FDs, bonds, debt funds), and maximum 20-30% real estate. Liquidity is crucial for retirement—you need assets you can convert to cash within 7 days without loss.'
+                });
+            }
+            
+            return risks.slice(0, 3);
+        }
+        
+        function confirmCallback() {
+            alert('Thank you, ' + userData.name + '! Our retirement planning expert will call you at ' + userData.phone + ' within 24 hours to schedule your free 20-minute review.');
+        }
+        
+        window.onload = function() {
+            showIntro();
+        };
+    </script>
+</body>
+</html>
