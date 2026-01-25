@@ -6,6 +6,7 @@
     <title>Mighty Retirement Readiness Score</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         html { scroll-behavior: smooth; }
         
         body {
@@ -22,7 +23,7 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 700px;
+            max-width: 600px;
             width: 100%;
             overflow: hidden;
         }
@@ -77,134 +78,93 @@
         .screen { display: none; }
         .screen.active { display: block; }
         
-        .dimension-tag {
-            display: inline-block;
-            font-size: 11px;
+        .question-number {
+            font-size: 14px;
             color: #667eea;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: rgba(102, 126, 234, 0.1);
-            padding: 4px 12px;
-            border-radius: 12px;
-        }
-        
-        .question-number {
-            font-size: 13px;
-            color: #6c757d;
-            font-weight: 600;
-            margin-bottom: 12px;
         }
         
         .question-text {
             font-size: 20px;
             color: #212529;
-            line-height: 1.5;
-            margin-bottom: 30px;
+            line-height: 1.6;
+            margin-bottom: 35px;
             font-weight: 600;
         }
         
         .button-group {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             flex-direction: column;
         }
         
         .btn {
-            padding: 16px 20px;
-            border: 2px solid #e9ecef;
+            padding: 18px 24px;
+            border: 2px solid #667eea;
             border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 17px;
+            font-weight: 600;
             cursor: pointer;
             background: white;
-            color: #212529;
+            color: #667eea;
             transition: all 0.3s;
-            text-align: left;
             -webkit-tap-highlight-color: transparent;
         }
         
         .btn:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.05);
-            transform: translateX(4px);
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
         
         .btn:active {
-            background: rgba(102, 126, 234, 0.1);
+            background: #667eea;
+            color: white;
         }
         
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            text-align: center;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
         
         .intro-screen { text-align: center; }
-        .intro-icon { font-size: 64px; margin-bottom: 20px; }
-        .intro-screen h2 { font-size: 24px; color: #212529; margin-bottom: 16px; font-weight: 700; }
-        .intro-screen p { font-size: 15px; color: #6c757d; line-height: 1.7; margin-bottom: 12px; }
+        .intro-icon { font-size: 72px; margin-bottom: 20px; }
+        .intro-screen h2 { font-size: 24px; color: #212529; margin-bottom: 20px; font-weight: 700; }
+        .intro-screen p { font-size: 16px; color: #6c757d; line-height: 1.7; margin-bottom: 15px; }
         
-        .footer-disclaimer {
+        .feature-list {
+            text-align: left;
+            margin: 25px 0;
             background: #f8f9fa;
-            border-top: 1px solid #e9ecef;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 0 0 20px 20px;
-            margin: 40px -30px -40px -30px;
-        }
-        
-        .footer-disclaimer .disclaimer-title {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #6c757d;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        
-        .footer-disclaimer p {
-            font-size: 11px;
-            color: #6c757d;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        .warning-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border-left: 4px solid #3b82f6;
             padding: 20px;
             border-radius: 10px;
-            margin: 25px 0;
-            text-align: left;
         }
         
-        .warning-box strong {
-            color: #1e40af;
-            display: block;
-            margin-bottom: 8px;
+        .feature-item {
+            display: flex;
+            margin-bottom: 12px;
             font-size: 14px;
+            color: #495057;
         }
         
-        .warning-box p {
-            color: #1e3a8a;
-            font-size: 14px;
-            line-height: 1.6;
+        .feature-item::before {
+            content: '✓';
+            color: #667eea;
+            font-weight: 700;
+            margin-right: 10px;
+            font-size: 18px;
         }
         
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 24px; }
         .form-group label {
             display: block;
             font-size: 14px;
             color: #495057;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
         }
         
@@ -226,77 +186,168 @@
         
         .results-hero {
             color: white;
-            padding: 35px 30px 25px;
+            padding: 40px 30px 30px;
             text-align: center;
+            margin: -40px -30px 0 -30px;
         }
         
-        .hero-critical { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
-        .hero-struggling { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
-        .hero-leaking { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-        .hero-optimised { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .hero-red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .hero-yellow { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .hero-green { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        
+        .score-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
         
         .score-circle {
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
         }
         
-        .score-number { font-size: 56px; font-weight: 700; color: white; line-height: 1; }
-        .score-outof { font-size: 14px; color: white; opacity: 0.9; margin-top: 4px; }
+        .score-number { font-size: 52px; font-weight: 700; color: white; line-height: 1; }
+        .score-outof { font-size: 16px; color: white; opacity: 0.9; margin-top: 4px; }
         
-        .risk-band {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+        .score-red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .score-yellow { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .score-green { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
         
-        .risk-subtitle {
-            font-size: 14px;
+        .score-info { text-align: left; flex: 1; max-width: 280px; }
+        .score-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             opacity: 0.9;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
+        
+        .score-category { font-size: 22px; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+        .score-recommendation { font-size: 14px; opacity: 0.95; font-weight: 500; }
         
         .results-body { padding: 30px; }
         
-        .user-info-display {
+        .insight-card {
             background: #f8f9fa;
-            padding: 16px 20px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
+        }
+        
+        .insight-card.red { border-left: 4px solid #ef4444; }
+        .insight-card.yellow { border-left: 4px solid #f59e0b; }
+        .insight-card.green { border-left: 4px solid #10b981; }
+        
+        .insight-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .insight-text { font-size: 15px; color: #495057; line-height: 1.7; }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .action-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #495057;
+            line-height: 1.5;
+        }
+        
+        .action-item strong {
+            display: block;
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        
+        .stats-banner {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+            border-left: 4px solid #fbbf24;
+        }
+        
+        .stats-banner h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .stats-banner p {
+            font-size: 14px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+        
+        .stats-banner strong {
+            font-weight: 700;
+            color: #fbbf24;
+        }
+        
+        .user-info-compact {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
         
-        .user-info-grid {
+        .user-info-compact .info-grid {
             display: flex;
             gap: 20px;
-            flex-wrap: wrap;
+            flex: 1;
         }
         
-        .user-info-item {
-            display: flex;
-            flex-direction: column;
+        .user-info-compact .info-item {
+            text-align: left;
+            flex: 1;
         }
         
-        .user-label {
+        .user-info-compact .label {
+            color: #6c757d;
             font-size: 11px;
             text-transform: uppercase;
-            color: #6c757d;
-            font-weight: 600;
             margin-bottom: 4px;
+            font-weight: 600;
         }
         
-        .user-value {
+        .user-info-compact .value { 
+            color: #212529; 
+            font-weight: 700; 
             font-size: 15px;
-            color: #212529;
-            font-weight: 600;
         }
         
         .edit-btn {
@@ -304,23 +355,24 @@
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
         
         .edit-btn:hover {
             background: #5568d3;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         
         .edit-form {
             display: none;
-            background: #f8f9fa;
             padding: 20px;
-            border-radius: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         
@@ -331,15 +383,15 @@
         .edit-form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
         
         .edit-form input {
             width: 100%;
             padding: 10px 14px;
             border: 2px solid #dee2e6;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 14px;
         }
         
@@ -351,7 +403,6 @@
         .edit-form-buttons {
             display: flex;
             gap: 10px;
-            margin-top: 12px;
         }
         
         .save-btn {
@@ -360,7 +411,7 @@
             color: white;
             border: none;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
         }
@@ -371,308 +422,19 @@
             color: white;
             border: none;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
         }
         
-        .diagnostic-section {
-            margin-bottom: 25px;
-        }
-        
-        .section-header {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #6c757d;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .dimension-grid {
-            display: grid;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-        
-        .dimension-item {
-            background: white;
+        .cta-section {
+            background: linear-gradient(to bottom, rgba(102, 126, 234, 0.05), rgba(102, 126, 234, 0.1));
             padding: 20px;
             border-radius: 12px;
-            border: 2px solid #f1f5f9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            transition: all 0.3s;
-        }
-        
-        .dimension-item:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transform: translateY(-2px);
-        }
-        
-        .dimension-item.critical { 
-            border-left: 5px solid #dc2626;
-            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
-        }
-        .dimension-item.struggling { 
-            border-left: 5px solid #f59e0b;
-            background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
-        }
-        .dimension-item.leaking { 
-            border-left: 5px solid #3b82f6;
-            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
-        }
-        .dimension-item.optimised { 
-            border-left: 5px solid #10b981;
-            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-        }
-        
-        .dim-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-        
-        .dim-name {
-            font-size: 15px;
-            font-weight: 700;
-            color: #212529;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .dim-icon {
-            font-size: 24px;
-        }
-        
-        .dim-score {
-            font-size: 18px;
-            font-weight: 800;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        
-        .dim-score.critical { 
-            color: #dc2626; 
-            background: #fef2f2;
-        }
-        .dim-score.struggling { 
-            color: #f59e0b; 
-            background: #fffbeb;
-        }
-        .dim-score.leaking { 
-            color: #3b82f6; 
-            background: #eff6ff;
-        }
-        .dim-score.optimised { 
-            color: #10b981; 
-            background: #f0fdf4;
-        }
-        
-        .dim-bar-container {
-            position: relative;
-            margin-bottom: 8px;
-        }
-        
-        .dim-bar {
-            height: 12px;
-            background: #f1f5f9;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .dim-fill {
-            height: 100%;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            border-radius: 20px;
-        }
-        
-        .dim-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .dim-fill.critical { 
-            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
-        }
-        .dim-fill.struggling { 
-            background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
-        }
-        .dim-fill.leaking { 
-            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
-        }
-        .dim-fill.optimised { 
-            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
-        }
-        
-        .dim-label {
-            font-size: 11px;
-            color: #64748b;
-            margin-top: 6px;
-            font-weight: 500;
-        }
-        
-        .dim-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 8px;
-            padding: 4px 10px;
-            border-radius: 12px;
-        }
-        
-        .dim-status.critical {
-            color: #dc2626;
-            background: #fef2f2;
-        }
-        .dim-status.struggling {
-            color: #f59e0b;
-            background: #fffbeb;
-        }
-        .dim-status.leaking {
-            color: #3b82f6;
-            background: #eff6ff;
-        }
-        .dim-status.optimised {
-            color: #10b981;
-            background: #f0fdf4;
-        }
-        
-        .dim-status-icon {
-            font-size: 14px;
-        }
-        
-        .risk-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-        
-        .risk-card {
-            background: #fff5f5;
-            border: 2px solid #fee;
-            border-left: 4px solid #dc2626;
-            padding: 18px;
-            border-radius: 10px;
-        }
-        
-        .risk-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .risk-icon {
-            font-size: 22px;
-            line-height: 1;
-        }
-        
-        .risk-title {
-            flex: 1;
-            font-size: 15px;
-            font-weight: 700;
-            color: #991b1b;
-            line-height: 1.4;
-        }
-        
-        .risk-description {
-            font-size: 13px;
-            color: #7f1d1d;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-        
-        .action-box {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 14px;
-            border-radius: 8px;
-        }
-        
-        .action-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            opacity: 0.9;
-            margin-bottom: 5px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        .action-text {
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-        
-        .conversion-box {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
             text-align: center;
-            margin-top: 20px;
         }
         
-        .conversion-box h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-        
-        .conversion-box p {
-            font-size: 14px;
-            line-height: 1.5;
-            opacity: 0.9;
-            margin-bottom: 16px;
-        }
-        
-        .conversion-box strong {
-            color: #fbbf24;
-        }
-        
-        .cta-button {
-            background: #fbbf24;
-            color: #1e293b;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-        }
-        
-        .cta-button:hover {
-            background: #f59e0b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
-        }
+        .cta-section p { font-size: 14px; color: #495057; margin-bottom: 15px; font-weight: 500; }
         
         .mighty-final {
             text-align: center;
@@ -760,6 +522,7 @@
             text-align: left;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             border-left: 3px solid #667eea;
+            position: relative;
         }
         
         .testimonial-card p {
@@ -826,8 +589,41 @@
             line-height: 1.7;
         }
         
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+            text-align: left;
+        }
+        
+        .disclaimer h4 {
+            font-size: 13px;
+            color: #856404;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .disclaimer p {
+            font-size: 12px;
+            color: #856404;
+            line-height: 1.6;
+        }
+        
         @media (max-width: 767px) {
-            .question-text { font-size: 18px; }
+            .score-display { flex-direction: column; gap: 20px; }
+            .score-info { text-align: center; max-width: 100%; }
+            .action-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media (min-width: 768px) {
+            .header h1 { font-size: 32px; }
+            .question-text { font-size: 22px; }
+            .button-group { flex-direction: row; }
+            .btn { flex: 1; }
         }
     </style>
 </head>
@@ -835,6 +631,7 @@
     <div class="container">
         <div class="header">
             <h1>Mighty Retirement Readiness Score™</h1>
+            <p>12-Point Retirement Readiness Assessment</p>
         </div>
         
         <div class="progress-container" id="progress">
@@ -857,198 +654,59 @@
         var userData = {};
         
         var questions = [
-            {
-                dimension: '⏰ Time Advantage',
-                text: 'What is your current age?',
-                type: 'options',
-                options: [
-                    { text: 'Below 35 years', value: 100 },
-                    { text: '35-40 years', value: 80 },
-                    { text: '41-45 years', value: 60 },
-                    { text: '46-50 years', value: 40 },
-                    { text: '51-55 years', value: 20 },
-                    { text: 'Above 55 years', value: 10 }
-                ],
-                weight: 0.15
-            },
-            {
-                dimension: '⏰ Time Advantage',
-                text: 'At what age do you plan to retire?',
-                type: 'options',
-                options: [
-                    { text: '65 or later', value: 100 },
-                    { text: '60-64', value: 70 },
-                    { text: '55-59', value: 40 },
-                    { text: 'Below 55', value: 20 },
-                    { text: 'Already retired', value: 10 }
-                ],
-                weight: 0.15
-            },
-            {
-                dimension: '💰 Savings Power',
-                text: 'What percentage of your monthly income do you invest for long-term goals (retirement, children\'s future)?',
-                type: 'options',
-                options: [
-                    { text: '30% or more', value: 100 },
-                    { text: '20-29%', value: 70 },
-                    { text: '10-19%', value: 40 },
-                    { text: '5-9%', value: 20 },
-                    { text: 'Less than 5%', value: 10 }
-                ],
-                weight: 0.25
-            },
-            {
-                dimension: '💰 Savings Power',
-                text: 'If you lost your job today, how many months can your current savings (emergency fund) cover your family expenses?',
-                type: 'options',
-                options: [
-                    { text: '12 months or more', value: 100 },
-                    { text: '6-11 months', value: 70 },
-                    { text: '3-5 months', value: 40 },
-                    { text: '1-2 months', value: 20 },
-                    { text: 'Less than 1 month', value: 10 }
-                ],
-                weight: 0.25
-            },
-            {
-                dimension: '📈 Inflation Protection',
-                text: 'What percentage of your retirement savings is invested in equity-linked assets (equity mutual funds, stocks, ELSS)?',
-                type: 'options',
-                options: [
-                    { text: '50% or more', value: 100 },
-                    { text: '30-49%', value: 70 },
-                    { text: '15-29%', value: 40 },
-                    { text: '5-14%', value: 20 },
-                    { text: 'Less than 5% or zero', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '📈 Inflation Protection',
-                text: 'Do you believe fixed deposits and EPF alone are enough to beat inflation and build a retirement corpus?',
-                type: 'options',
-                options: [
-                    { text: 'No, I need equity exposure to beat inflation', value: 100 },
-                    { text: 'Not sure, but I am open to learning', value: 50 },
-                    { text: 'Yes, FDs and EPF are safe and sufficient', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '🏥 Risk & Healthcare',
-                text: 'Do you have health insurance that will cover you after age 60?',
-                type: 'options',
-                options: [
-                    { text: 'Yes, ₹75 lakhs or higher coverage', value: 100 },
-                    { text: 'Yes, ₹50-74 lakhs coverage', value: 70 },
-                    { text: 'Yes, ₹25-49 lakhs coverage', value: 40 },
-                    { text: 'Yes, below ₹25 lakhs coverage', value: 20 },
-                    { text: 'No health insurance', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '🏥 Risk & Healthcare',
-                text: 'If a medical emergency requires ₹10 lakhs today, how would you fund it?',
-                type: 'options',
-                options: [
-                    { text: 'My health insurance would cover it', value: 100 },
-                    { text: 'I have an emergency fund specifically for this', value: 80 },
-                    { text: 'I would break my FDs or investments', value: 40 },
-                    { text: 'I would borrow from family or take a loan', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '📋 Planning Discipline',
-                text: 'Do you know how much monthly income you will need during retirement?',
-                type: 'options',
-                options: [
-                    { text: 'Yes, I have calculated it precisely', value: 100 },
-                    { text: 'I have a rough estimate', value: 50 },
-                    { text: 'No, I have not calculated this yet', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '📋 Planning Discipline',
-                text: 'Do you know the exact retirement corpus (total amount) you need to accumulate?',
-                type: 'options',
-                options: [
-                    { text: 'Yes, I have calculated it with inflation', value: 100 },
-                    { text: 'I have a rough target number', value: 50 },
-                    { text: 'No, I do not know the exact amount', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '📋 Planning Discipline',
-                text: 'When did you last review your retirement plan and investments?',
-                type: 'options',
-                options: [
-                    { text: 'Within the last 6 months', value: 100 },
-                    { text: '6-12 months ago', value: 70 },
-                    { text: '1-2 years ago', value: 40 },
-                    { text: 'More than 2 years ago', value: 20 },
-                    { text: 'I have never reviewed it', value: 10 }
-                ],
-                weight: 0.20
-            },
-            {
-                dimension: '📋 Planning Discipline',
-                text: 'Do you have a written or tracked retirement plan?',
-                type: 'options',
-                options: [
-                    { text: 'Yes, with clear goals and tracking', value: 100 },
-                    { text: 'I have a mental plan but not written', value: 40 },
-                    { text: 'No formal plan yet', value: 10 }
-                ],
-                weight: 0.20
-            }
+            "Does your total retirement corpus today equal at least 25× your expected annual retirement expenses?",
+            "Do you have a separate liquid buffer equal to at least 5 years of expenses, kept aside from your main retirement investments?",
+            "Will your pension, rent, FD/annuity interest and other predictable income sources cover at least 40% of your expected monthly retirement expenses? (Example: If expenses are ₹50,000, predictable income should be ₹20,000 or more)",
+            "Is less than 40% of your total net worth locked into one single asset class (property, business, one stock, etc.)?",
+            "Can you access at least 3 years of expenses within 30 days without penalties or forced selling?",
+            "Have you planned and calculated post-retirement tax impact on all your income streams?",
+            "Do you have a registered Will and correct nominations across all assets?",
+            "Do you follow a defined annual withdrawal rule instead of ad-hoc withdrawals?",
+            "Do you rebalance your portfolio at least once every year?",
+            "Will at least 40% of your retirement corpus remain invested in growth assets (equity-oriented) even after retirement?",
+            "Can your retirement plan remain independent without depending financially on your children or relatives?",
+            "Can your retirement plan comfortably manage a one-time unexpected financial event of ₹10–15 lakhs without disrupting long-term plans?"
         ];
         
         function showIntro() {
             window.scrollTo(0, 0);
             app.innerHTML = '<div class="screen active intro-screen">' +
                 '<div class="intro-icon">🎯</div>' +
-                '<h2>Discover Your Retirement Risk Profile</h2>' +
-                '<p>This is not a quiz. This is a financial risk diagnostic that reveals exactly where your retirement plan is vulnerable.</p>' +
-                '<div class="warning-box">' +
-                '<strong>💡 Why This Matters</strong>' +
-                '<p>73% of Indians have no idea if they are saving enough to retire. Most discover this too late. This 12-question assessment shows you the truth-right now.</p>' +
+                '<h2>Welcome to Your Retirement Readiness Assessment</h2>' +
+                '<p>In the next few minutes, you will discover exactly where you stand on your retirement journey.</p>' +
+                '<div class="feature-list">' +
+                '<div class="feature-item">12 critical questions designed by retirement planning experts</div>' +
+                '<div class="feature-item">Instant personalized score and detailed analysis</div>' +
+                '<div class="feature-item">Actionable recommendations based on your results</div>' +
+                '<div class="feature-item">Takes only 2-3 minutes to complete</div>' +
                 '</div>' +
-                '<p style="margin-top: 20px; color: #212529; font-weight: 600;">Find out your Mighty Retirement Readiness Score in 3 minutes</p>' +
-                '<button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="startAssessment()">Start My Risk Assessment →</button>' +
-                '</div>' +
-                '<div class="footer-disclaimer">' +
-                '<div class="disclaimer-title">Disclaimer</div>' +
+                '<p style="margin-top: 25px; color: #212529; font-weight: 600;">Ready to find out your Retirement Readiness Score?</p>' +
+                '<button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="startQuiz()">Start Assessment →</button>' +
+                '<div class="disclaimer">' +
+                '<h4>⚠️ Disclaimer</h4>' +
                 '<p>This assessment provides an indicative evaluation based on your responses and is not financial advice, a retirement plan, or investment recommendation. Consult a qualified financial advisor before making investment decisions. Mutual funds and capital market investments are subject to market risks. Please read all scheme-related documents carefully before investing.</p>' +
+                '</div>' +
                 '</div>';
         }
         
-        function startAssessment() {
+        function startQuiz() {
             progressBar.style.display = 'block';
             showQuestion(0);
         }
         
         function showQuestion(idx) {
             var qNum = idx + 1;
-            var q = questions[idx];
-            
             document.getElementById('pText').textContent = 'Question ' + qNum + ' of 12';
             document.getElementById('pCount').textContent = qNum + '/12';
             document.getElementById('pFill').style.width = ((qNum/12)*100) + '%';
             
-            var optionsHTML = '';
-            for (var i = 0; i < q.options.length; i++) {
-                optionsHTML += '<button class="btn" onclick="answerQuestion(' + idx + ', ' + q.options[i].value + ')">' + q.options[i].text + '</button>';
-            }
-            
             app.innerHTML = '<div class="screen active">' +
-                '<div class="dimension-tag">' + q.dimension + '</div>' +
                 '<div class="question-number">Question ' + qNum + ' of 12</div>' +
-                '<div class="question-text">' + q.text + '</div>' +
-                '<div class="button-group">' + optionsHTML + '</div>' +
+                '<div class="question-text">' + questions[idx] + '</div>' +
+                '<div class="button-group">' +
+                '<button class="btn" onclick="answerQuestion(' + idx + ', 1)">✓ YES</button>' +
+                '<button class="btn" onclick="answerQuestion(' + idx + ', 0)">✗ NO / NOT SURE</button>' +
+                '</div>' +
                 '</div>';
         }
         
@@ -1064,9 +722,9 @@
         function showForm() {
             progressBar.style.display = 'none';
             app.innerHTML = '<div class="screen active">' +
-                '<div class="intro-icon">📊</div>' +
-                '<div class="question-text" style="text-align: center;">Your Risk Analysis is Ready</div>' +
-                '<p style="text-align: center; color: #6c757d; margin-bottom: 30px;">Enter your details to access your personalized Retirement Readiness Report</p>' +
+                '<div class="intro-icon">📋</div>' +
+                '<div class="question-number">Almost There!</div>' +
+                '<div class="question-text">We have analyzed your responses. Enter your details to see your personalized Retirement Readiness Score.</div>' +
                 '<form onsubmit="submitForm(event)">' +
                 '<div class="form-group">' +
                 '<label>Full Name *</label>' +
@@ -1077,10 +735,10 @@
                 '<input type="tel" id="phone" pattern="[0-9]{10}" required>' +
                 '</div>' +
                 '<div class="form-group">' +
-                '<label>Email *</label>' +
-                '<input type="email" id="email" required>' +
+                '<label>Age *</label>' +
+                '<input type="number" id="age" min="40" max="100" required>' +
                 '</div>' +
-                '<button type="submit" class="btn btn-primary" style="width: 100%;">View My Retirement Risk Report →</button>' +
+                '<button type="submit" class="btn btn-primary" style="width: 100%;">View My Retirement Readiness Score →</button>' +
                 '</form>' +
                 '</div>';
         }
@@ -1090,234 +748,169 @@
             userData = {
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value
+                age: document.getElementById('age').value
             };
-            calculateAndShowResults();
+            showResults();
         }
         
-        function calculateAndShowResults() {
+        function showResults() {
             window.scrollTo(0, 0);
+            var total = 0;
+            for (var i = 0; i < answers.length; i++) {
+                total += answers[i];
+            }
+            var score = Math.round(total * 8.33);
             
-            var dimensions = {
-                timeAdvantage: { name: 'Time Advantage', score: 0, weight: 0.15, icon: '⏰' },
-                savingsPower: { name: 'Savings Power', score: 0, weight: 0.25, icon: '💰' },
-                inflationProtection: { name: 'Inflation Protection', score: 0, weight: 0.20, icon: '📈' },
-                riskHealthcare: { name: 'Risk & Healthcare', score: 0, weight: 0.20, icon: '🏥' },
-                planningDiscipline: { name: 'Planning Discipline', score: 0, weight: 0.20, icon: '📋' }
-            };
+            var cat, rec, content, colorClass, heroClass;
             
-            dimensions.timeAdvantage.score = (answers[0] * questions[0].weight + answers[1] * questions[1].weight) / (questions[0].weight + questions[1].weight);
-            dimensions.savingsPower.score = (answers[2] * questions[2].weight + answers[3] * questions[3].weight) / (questions[2].weight + questions[3].weight);
-            dimensions.inflationProtection.score = (answers[4] * questions[4].weight + answers[5] * questions[5].weight) / (questions[4].weight + questions[5].weight);
-            dimensions.riskHealthcare.score = (answers[6] * questions[6].weight + answers[7] * questions[7].weight) / (questions[6].weight + questions[7].weight);
-            dimensions.planningDiscipline.score = (answers[8] * questions[8].weight + answers[9] * questions[9].weight + answers[10] * questions[10].weight + answers[11] * questions[11].weight) / (questions[8].weight + questions[9].weight + questions[10].weight + questions[11].weight);
-            
-            var totalScore = Math.round(
-                dimensions.timeAdvantage.score * dimensions.timeAdvantage.weight +
-                dimensions.savingsPower.score * dimensions.savingsPower.weight +
-                dimensions.inflationProtection.score * dimensions.inflationProtection.weight +
-                dimensions.riskHealthcare.score * dimensions.riskHealthcare.weight +
-                dimensions.planningDiscipline.score * dimensions.planningDiscipline.weight
-            );
-            
-            var riskBand, heroClass, conversionMessage;
-            if (totalScore >= 75) {
-                riskBand = { title: 'Optimised', subtitle: 'Strong retirement foundation' };
-                heroClass = 'hero-optimised';
-                conversionMessage = 'Your score of ' + totalScore + ' shows solid planning, but there is still room to maximize returns and extend your corpus longevity. A 15-minute expert review can show you how to optimize further.';
-            } else if (totalScore >= 55) {
-                riskBand = { title: 'Leaking', subtitle: 'Good start, but key gaps exist' };
-                heroClass = 'hero-leaking';
-                conversionMessage = 'Your score of ' + totalScore + ' reveals critical leaks in your retirement plan. Without fixing these gaps, you risk running out of money after age 65. A 20-minute review can plug these leaks permanently.';
-            } else if (totalScore >= 35) {
-                riskBand = { title: 'Struggling', subtitle: 'Significant retirement risk detected' };
-                heroClass = 'hero-struggling';
-                conversionMessage = 'Your score of ' + totalScore + ' indicates high risk of outliving your savings. The gaps in your plan compound over time. A 20-minute expert consultation can show you exactly how to course-correct before it is too late.';
+            if (score <= 30) {
+                cat = 'Needs Urgent Attention';
+                rec = 'Complete Retirement Planning Required';
+                colorClass = 'red';
+                heroClass = 'hero-red';
+                content = {
+                    icon: '⚠️',
+                    text: 'Your assessment reveals significant gaps in retirement preparedness. Based on your responses, critical foundation elements like corpus adequacy, emergency liquidity, diversification, and systematic planning frameworks appear to be missing or incomplete. This score indicates you may be exposed to substantial retirement risks.',
+                    actions: [
+                        ['Corpus Gap', 'Your retirement fund may be significantly below the 25x annual expense benchmark'],
+                        ['Liquidity Risk', 'Limited access to emergency funds could force poor financial decisions'],
+                        ['Concentration Risk', 'Heavy reliance on single assets or income sources detected'],
+                        ['Planning Structure', 'Lack of systematic approach to withdrawals and portfolio management']
+                    ]
+                };
+            } else if (score <= 50) {
+                cat = 'Getting There, But Needs Work';
+                rec = 'Strengthen Your Retirement Plan';
+                colorClass = 'yellow';
+                heroClass = 'hero-yellow';
+                content = {
+                    icon: '📈',
+                    text: 'You have taken initial steps toward retirement planning, but several critical areas need strengthening. Your assessment shows gaps in either corpus size, emergency buffers, diversification, tax planning, or systematic withdrawal strategies. While you have started, the foundation needs reinforcement.',
+                    actions: [
+                        ['Partial Coverage', 'Some retirement pillars are in place, but coverage is incomplete'],
+                        ['Buffer Gaps', 'Emergency reserves or liquidity cushions may be insufficient'],
+                        ['Tax Exposure', 'Potential tax inefficiencies could erode retirement income'],
+                        ['Strategy Gaps', 'Missing systematic approaches to key retirement components']
+                    ]
+                };
+            } else if (score <= 70) {
+                cat = 'On The Right Track';
+                rec = 'Fine-Tune Your Retirement Strategy';
+                colorClass = 'yellow';
+                heroClass = 'hero-yellow';
+                content = {
+                    icon: '✨',
+                    text: 'You have built a solid foundation with good coverage across most retirement planning dimensions. Your responses indicate awareness of key principles and some implementation. However, optimization opportunities exist in areas like portfolio rebalancing discipline, growth asset allocation, withdrawal systematization, or estate documentation.',
+                    actions: [
+                        ['Strong Foundation', 'Core retirement elements are largely in place and functional'],
+                        ['Optimization Needed', 'Fine-tuning required in systematic processes and discipline'],
+                        ['Growth Allocation', 'Balance between safety and growth may need adjustment'],
+                        ['Process Discipline', 'Regular review and rebalancing practices could be strengthened']
+                    ]
+                };
+            } else if (score <= 85) {
+                cat = 'Well Prepared';
+                rec = 'Optimize & Protect Your Retirement';
+                colorClass = 'green';
+                heroClass = 'hero-green';
+                content = {
+                    icon: '🏆',
+                    text: 'Excellent work! Your assessment shows strong retirement readiness across most dimensions. You demonstrate good corpus adequacy, diversification discipline, and systematic thinking. The focus now is on advanced optimization—maximizing tax efficiency, fine-tuning withdrawal strategies, ensuring inflation protection, and enhancing overall returns within your risk parameters.',
+                    actions: [
+                        ['Strong Position', 'You have comprehensive coverage across retirement planning pillars'],
+                        ['Optimization Phase', 'Focus shifts to efficiency gains and performance enhancement'],
+                        ['Tax Efficiency', 'Potential to improve after-tax returns through strategic planning'],
+                        ['Longevity Planning', 'Ensuring corpus sustainability through extended retirement horizon']
+                    ]
+                };
             } else {
-                riskBand = { title: 'Critical', subtitle: 'Immediate action required' };
-                heroClass = 'hero-critical';
-                conversionMessage = 'Your score of ' + totalScore + ' reveals critical retirement planning gaps that will lead to severe financial stress after age 60. You need immediate expert guidance. A 20-minute review will give you a clear roadmap to secure your retirement.';
+                cat = 'Excellently Prepared';
+                rec = 'Preserve Wealth & Build Legacy';
+                colorClass = 'green';
+                heroClass = 'hero-green';
+                content = {
+                    icon: '💎',
+                    text: 'Outstanding! You are among the top tier of retirement preparedness. Your assessment indicates comprehensive planning with strong corpus, excellent diversification, systematic processes, and disciplined execution. You have addressed most critical retirement risks. The priority now is wealth preservation, advanced tax strategies, ensuring corpus longevity through market cycles, and maintaining purchasing power.',
+                    actions: [
+                        ['Exceptional Readiness', 'You score in the top percentile for retirement preparedness'],
+                        ['Preservation Focus', 'Priority is protecting and sustaining accumulated wealth'],
+                        ['Advanced Strategies', 'Opportunity for sophisticated tax and return optimization'],
+                        ['Long-term Sustainability', 'Ensuring plan adapts to changing markets and longevity']
+                    ]
+                };
             }
             
-            var risks = generateRisks(dimensions, answers, totalScore);
-            
-            var dimensionsHTML = '';
-            var dimKeys = Object.keys(dimensions);
-            for (var d = 0; d < dimKeys.length; d++) {
-                var dim = dimensions[dimKeys[d]];
-                var dimScore = Math.round(dim.score);
-                var dimClass = dimScore >= 75 ? 'optimised' : dimScore >= 55 ? 'leaking' : dimScore >= 35 ? 'struggling' : 'critical';
-                var dimStatus = dimScore >= 75 ? '✓ Strong' : dimScore >= 55 ? '⚠ Needs Work' : dimScore >= 35 ? '⚠ At Risk' : '⨯ Critical';
-                
-                dimensionsHTML += '<div class="dimension-item ' + dimClass + '">' +
-                    '<div class="dim-header">' +
-                    '<div class="dim-name"><span class="dim-icon">' + dim.icon + '</span>' + dim.name + '</div>' +
-                    '<div class="dim-score ' + dimClass + '">' + dimScore + '<span style="font-size: 13px; opacity: 0.7;">/100</span></div>' +
-                    '</div>' +
-                    '<div class="dim-bar-container">' +
-                    '<div class="dim-bar">' +
-                    '<div class="dim-fill ' + dimClass + '" style="width: ' + dimScore + '%"></div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="dim-status ' + dimClass + '"><span class="dim-status-icon">' + (dimScore >= 75 ? '✓' : dimScore >= 35 ? '⚠' : '⨯') + '</span>' + dimStatus + '</div>' +
-                    '</div>';
+            var actionsHTML = '';
+            for (var i = 0; i < content.actions.length; i++) {
+                actionsHTML += '<div class="action-item"><strong>' + content.actions[i][0] + '</strong>' + content.actions[i][1] + '</div>';
             }
             
-            var risksHTML = '';
-            for (var r = 0; r < risks.length; r++) {
-                var risk = risks[r];
-                risksHTML += '<div class="risk-card">' +
-                    '<div class="risk-header">' +
-                    '<div class="risk-icon">' + risk.icon + '</div>' +
-                    '<div class="risk-title">' + risk.title + '</div>' +
-                    '</div>' +
-                    '<div class="risk-description">' + risk.description + '</div>' +
-                    '<div class="action-box">' +
-                    '<div class="action-label">What To Do</div>' +
-                    '<div class="action-text">' + risk.action + '</div>' +
-                    '</div>' +
-                    '</div>';
-            }
+            var retirementFacts = [
+                '<strong>The ₹1 Crore Reality:</strong> A corpus of ₹1 crore generates only <strong>₹40,000-50,000 monthly</strong> at 5-6% safe withdrawal rate. With inflation, this buys <strong>50% less in just 12 years</strong>. Most Indians vastly underestimate how much they actually need.',
+                '<strong>The Healthcare Time Bomb:</strong> Post-60 healthcare costs in India rise at <strong>12-15% annually</strong>—double the regular inflation rate. A ₹5 lakh medical emergency today will cost <strong>₹16 lakhs in 10 years</strong>. Yet only 18% of Indian retirees have adequate health coverage.',
+                '<strong>The Longevity Surprise:</strong> Indians retiring at 60 today have a <strong>50% chance of living past 80</strong>—that is 20+ years of retirement. Your money needs to last longer than you think, but <strong>70% of Indians plan for only 10-15 years</strong>.',
+                '<strong>The Real Estate Trap:</strong> <strong>65% of Indian wealth</strong> is locked in real estate—but you cannot pay grocery bills with property. Illiquid assets create cash flow problems. Balanced retirement needs <strong>40-50% in liquid, income-generating assets</strong>.',
+                '<strong>The Inflation Crusher:</strong> At 6% inflation, ₹1 lakh today will have the purchasing power of just <strong>₹55,000 in 10 years</strong> and <strong>₹31,000 in 20 years</strong>. Fixed deposits and traditional plans cannot beat this wealth erosion.'
+            ];
+            
+            var randomFact = retirementFacts[Math.floor(Math.random() * retirementFacts.length)];
             
             app.innerHTML = '<div class="screen active result-screen">' +
                 '<div class="results-hero ' + heroClass + '">' +
-                '<div class="score-circle">' +
-                '<div class="score-number">' + totalScore + '</div>' +
+                '<div class="score-display">' +
+                '<div class="score-circle score-' + colorClass + '">' +
+                '<div class="score-number">' + score + '</div>' +
                 '<div class="score-outof">out of 100</div>' +
                 '</div>' +
-                '<div class="risk-band">' + riskBand.title + '</div>' +
-                '<div class="risk-subtitle">' + riskBand.subtitle + '</div>' +
+                '<div class="score-info">' +
+                '<div class="score-label">YOUR MRR SCORE</div>' +
+                '<div class="score-category">' + cat + '</div>' +
+                '<div class="score-recommendation">' + rec + '</div>' +
+                '</div>' +
+                '</div>' +
                 '</div>' +
                 '<div class="results-body">' +
-                '<div class="user-info-display" id="userInfoDisplay">' +
-                '<div class="user-info-grid">' +
-                '<div class="user-info-item"><div class="user-label">Name</div><div class="user-value">' + userData.name + '</div></div>' +
-                '<div class="user-info-item"><div class="user-label">Phone</div><div class="user-value">' + userData.phone + '</div></div>' +
-                '<div class="user-info-item"><div class="user-label">Email</div><div class="user-value">' + userData.email + '</div></div>' +
+                '<div class="insight-card ' + colorClass + '">' +
+                '<div class="insight-title">' +
+                '<span>' + content.icon + '</span>' +
+                '<span>What This Means For You</span>' +
+                '</div>' +
+                '<p class="insight-text">' + content.text + '</p>' +
+                '</div>' +
+                '<div class="action-grid">' + actionsHTML + '</div>' +
+                '<div class="stats-banner">' +
+                '<h3>💡 Retirement Reality Check</h3>' +
+                '<p>' + randomFact + '</p>' +
+                '</div>' +
+                '<div class="user-info-compact" id="userInfoDisplay">' +
+                '<div class="info-grid">' +
+                '<div class="info-item"><div class="label">Name</div><div class="value">' + userData.name + '</div></div>' +
+                '<div class="info-item"><div class="label">Phone</div><div class="value">' + userData.phone + '</div></div>' +
+                '<div class="info-item"><div class="label">Age</div><div class="value">' + userData.age + '</div></div>' +
                 '</div>' +
                 '<button class="edit-btn" onclick="toggleEditForm()">✏️ Edit</button>' +
                 '</div>' +
                 '<div class="edit-form" id="editForm">' +
                 '<div class="edit-form-row">' +
-                '<div><input type="text" id="editName" placeholder="Name" value="' + userData.name + '"></div>' +
-                '<div><input type="tel" id="editPhone" placeholder="Phone" value="' + userData.phone + '"></div>' +
+                '<div><label style="font-size: 12px; color: #6c757d; margin-bottom: 5px; display: block; font-weight: 600;">Name</label><input type="text" id="editName" value="' + userData.name + '"></div>' +
+                '<div><label style="font-size: 12px; color: #6c757d; margin-bottom: 5px; display: block; font-weight: 600;">Phone</label><input type="tel" id="editPhone" value="' + userData.phone + '"></div>' +
                 '</div>' +
-                '<div style="margin-bottom: 12px;"><input type="email" id="editEmail" placeholder="Email" value="' + userData.email + '"></div>' +
+                '<div style="margin-bottom: 15px;"><label style="font-size: 12px; color: #6c757d; margin-bottom: 5px; display: block; font-weight: 600;">Age</label><input type="number" id="editAge" value="' + userData.age + '" min="40" max="100"></div>' +
                 '<div class="edit-form-buttons">' +
-                '<button class="save-btn" onclick="saveUserInfo()">✓ Save</button>' +
+                '<button class="save-btn" onclick="saveUserInfo()">✓ Save Changes</button>' +
                 '<button class="cancel-btn" onclick="toggleEditForm()">Cancel</button>' +
                 '</div>' +
                 '</div>' +
-                '<div class="diagnostic-section">' +
-                '<div class="section-header">📊 YOUR 5 RETIREMENT RISK DIMENSIONS</div>' +
-                '<div class="dimension-grid">' + dimensionsHTML + '</div>' +
-                '</div>' +
-                '<div class="diagnostic-section">' +
-                '<div class="section-header">⚠️ YOUR TOP 3 RETIREMENT RISKS</div>' +
-                '<div class="risk-cards">' + risksHTML + '</div>' +
-                '</div>' +
-                '<div class="conversion-box">' +
-                '<h3>Ready to Fix These Gaps?</h3>' +
-                '<p>' + conversionMessage + '</p>' +
-                '<button class="cta-button" onclick="showMightyScreen()">📞 Book a Free Retirement Planning Session</button>' +
+                '<div class="cta-section">' +
+                '<p><strong>Get a FREE personalized roadmap</strong> to fix gaps, maximize returns, and retire confidently—built specifically for your situation</p>' +
+                '<button class="btn btn-primary" style="width: 100%;" onclick="showMightyScreen()">📞 Get My FREE Retirement Roadmap</button>' +
+                '<div class="disclaimer" style="margin-top: 20px;">' +
+                '<h4>⚠️ Disclaimer</h4>' +
+                '<p>This assessment provides an indicative evaluation based on your responses and is not financial advice, a retirement plan, or investment recommendation. Consult a qualified financial advisor before making investment decisions. Mutual funds and capital market investments are subject to market risks. Please read all scheme-related documents carefully before investing.</p>' +
                 '</div>' +
                 '</div>' +
-                '<div class="footer-disclaimer">' +
-                '<div class="disclaimer-title">Disclaimer</div>' +
-                '<p>This assessment is an indicative evaluation based on your responses and does not constitute financial advice, a personalized retirement plan, or investment recommendations. Always consult a SEBI-registered financial advisor before making investment decisions. Mutual funds and equity investments are subject to market risks. Past performance does not guarantee future returns. Please read all scheme-related documents carefully before investing.</p>' +
                 '</div>' +
                 '</div>';
-        }
-        
-        function generateRisks(dimensions, answers, totalScore) {
-            var risks = [];
-            
-            if (dimensions.inflationProtection.score < 60) {
-                var equityPercent = answers[4];
-                var equityText = 'most of your retirement money is in fixed deposits, PPF, or EPF';
-                if (equityPercent >= 70) {
-                    equityText = 'your equity allocation could be higher';
-                }
-                
-                risks.push({
-                    icon: '📉',
-                    title: 'Inflation is Silently Eroding Your Retirement Corpus',
-                    description: 'Based on your answers, ' + equityText + '. While these feel safe, they grow at only 6-8% per year. But inflation runs at 6-7%, and healthcare inflation is 12-15% annually.',
-                    action: 'Shift 40-50% of your retirement corpus into equity mutual funds (diversified, index, or flexi-cap). Equity delivers 12-15% over 15+ years, beating inflation significantly.'
-                });
-            }
-            
-            if (dimensions.riskHealthcare.score < 60) {
-                var healthCover = answers[6];
-                var coverText = 'you do not have health insurance';
-                if (healthCover >= 40 && healthCover < 70) {
-                    coverText = 'your health insurance coverage is inadequate';
-                }
-                if (healthCover >= 20 && healthCover < 40) {
-                    coverText = 'your health insurance coverage is dangerously low';
-                }
-                
-                risks.push({
-                    icon: '🏥',
-                    title: 'Medical Emergency Can Destroy Your Retirement Plan',
-                    description: 'Based on your answers, ' + coverText + '. Post-60 healthcare costs rise 12-15% annually. A cardiac surgery costs ₹8-15 lakhs. Cancer treatment runs ₹20-40 lakhs. Without coverage, you will break retirement investments during crisis.',
-                    action: 'Get ₹75 lakh - ₹1 crore health insurance covering till age 80+. Start now—premiums double every 5 years, and pre-existing conditions can block coverage later.'
-                });
-            }
-            
-            if (dimensions.savingsPower.score < 60) {
-                var savingsRate = answers[2];
-                var emergencyMonths = answers[3];
-                var savingsText = 'you are investing less than 20% of your income for long-term goals';
-                if (savingsRate < 40) {
-                    savingsText = 'you are investing less than 10% of your income for long-term goals';
-                }
-                if (emergencyMonths < 70) {
-                    savingsText += ' and your emergency fund can only cover 6 months or less';
-                }
-                
-                risks.push({
-                    icon: '💸',
-                    title: 'Not Saving Enough to Retire Comfortably',
-                    description: 'Based on your answers, ' + savingsText + '. To build ₹2-5 crore corpus (inflation-adjusted), you need 25-30% monthly investment. Lower rates mean working longer or reduced retirement lifestyle.',
-                    action: 'Increase monthly SIP by ₹5,000-10,000 now. Automate from salary. Build 12-month emergency fund in liquid funds. Every month delayed costs lakhs in compounding.'
-                });
-            }
-            
-            if (dimensions.planningDiscipline.score < 60 && risks.length < 3) {
-                risks.push({
-                    icon: '📋',
-                    title: 'No Clear Retirement Plan or Target',
-                    description: 'You do not know exactly how much you need, monthly savings required, or if you are on track. Most discover gaps 5-10 years before retirement—when it is too late to fix.',
-                    action: 'Calculate retirement corpus: Monthly income needed × 300 (4% rule), adjust for inflation. Determine monthly SIP backwards. Review every 6 months.'
-                });
-            }
-            
-            if (dimensions.timeAdvantage.score < 50 && risks.length < 3) {
-                var age = answers[0];
-                var ageText = 'you are over 45 years old';
-                if (age < 60) {
-                    ageText = 'you are over 50 years old';
-                }
-                
-                risks.push({
-                    icon: '⏰',
-                    title: 'Running Out of Time to Build Retirement Corpus',
-                    description: 'Based on your answers, ' + ageText + ' with less than 10-15 years left. Starting at 45 vs 35 means saving 2.5x more monthly. At 50, it is 4x more. Every year of delay is exponentially costly.',
-                    action: 'Act now. Maximize equity allocation (60-70% if 10+ years to retire). Increase SIPs aggressively. Consider delaying retirement 2-3 years. Every month costs lakhs in lost compounding.'
-                });
-            }
-            
-            if (risks.length < 3) {
-                risks.push({
-                    icon: '🏠',
-                    title: 'Wealth Locked in Illiquid Real Estate',
-                    description: 'Most Indians have 60-70% wealth in property. You cannot pay bills with a flat. Selling takes 6-12 months, costs 2-3% brokerage, forced sales mean 10-20% loss, plus you lose rental income.',
-                    action: 'Rebalance: 40-50% equity funds, 30-40% debt (FDs, bonds), max 20-30% real estate. You need assets convertible to cash within 7 days without loss.'
-                });
-            }
-            
-            return risks.slice(0, 3);
         }
         
         function toggleEditForm() {
@@ -1332,12 +925,11 @@
         function saveUserInfo() {
             userData.name = document.getElementById('editName').value;
             userData.phone = document.getElementById('editPhone').value;
-            userData.email = document.getElementById('editEmail').value;
+            userData.age = document.getElementById('editAge').value;
             
-            var nameEls = document.querySelectorAll('.user-info-item .user-value');
-            nameEls[0].textContent = userData.name;
-            nameEls[1].textContent = userData.phone;
-            nameEls[2].textContent = userData.email;
+            document.querySelector('.info-item:nth-child(1) .value').textContent = userData.name;
+            document.querySelector('.info-item:nth-child(2) .value').textContent = userData.phone;
+            document.querySelector('.info-item:nth-child(3) .value').textContent = userData.age;
             
             toggleEditForm();
         }
@@ -1387,16 +979,18 @@
                 '<div class="stat-label">People registered for our masterclass webinar on retirement planning</div>' +
                 '</div>' +
                 '</div>' +
-                '<a href="https://getmighty.in/" target="_blank" class="website-link">🌐 Explore Mighty</a>' +
+                '<a href="https://www.getmighty.in" target="_blank" class="website-link">🌐 Visit www.getmighty.in</a>' +
                 '<div class="thank-you-note">' +
                 '<p style="margin-top: 25px; color: #667eea; font-weight: 600;">We are committed to helping you retire with confidence.</p>' +
+                '</div>' +
+                '<div class="disclaimer" style="margin-top: 20px;">' +
+                '<h4>⚠️ Disclaimer</h4>' +
+                '<p>This assessment provides an indicative evaluation based on your responses and is not financial advice, a retirement plan, or investment recommendation. Consult a qualified financial advisor before making investment decisions. Mutual funds and capital market investments are subject to market risks. Please read all scheme-related documents carefully before investing.</p>' +
                 '</div>' +
                 '</div>';
         }
         
-        window.onload = function() {
-            showIntro();
-        };
+        showIntro();
     </script>
 </body>
 </html>
