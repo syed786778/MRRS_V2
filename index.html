@@ -258,7 +258,42 @@
             gap: 8px;
         }
         
-        .insight-text { font-size: 15px; color: #495057; line-height: 1.7; }
+        .insight-text { 
+            font-size: 15px; 
+            color: #495057; 
+            line-height: 1.7; 
+            margin-bottom: 0;
+        }
+        
+        .diagnostic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .diagnostic-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .diagnostic-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .diagnostic-value {
+            font-size: 14px;
+            color: #212529;
+            font-weight: 600;
+            line-height: 1.4;
+        }
         
         .action-grid {
             display: grid;
@@ -873,11 +908,11 @@
                 '<div class="insight-card ' + colorClass + '">' +
                 '<div class="insight-title">' +
                 '<span>' + content.icon + '</span>' +
-                '<span>What This Means For You</span>' +
+                '<span>Your Retirement Assessment</span>' +
                 '</div>' +
                 '<p class="insight-text">' + content.text + '</p>' +
                 '</div>' +
-                '<div class="action-grid">' + actionsHTML + '</div>' +
+                '<div class="diagnostic-grid">' + diagnosticsHTML + '</div>' +
                 '<div class="stats-banner">' +
                 '<h3>💡 Retirement Reality Check</h3>' +
                 '<p>' + randomFact + '</p>' +
